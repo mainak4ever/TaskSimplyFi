@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  /* background-color: darkgrey; */
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* The switch - the box around the slider */
+.switch {
+  display: block;
+  --width-of-switch: 3.5em;
+  --height-of-switch: 2em;
+  /* size of sliding icon -- sun and moon */
+  --size-of-icon: 1.4em;
+  /* it is like a inline-padding of switch */
+  --slider-offset: 0.3em;
+  position: relative;
+  width: var(--width-of-switch);
+  height: var(--height-of-switch);
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f4f4f5;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: var(--size-of-icon,1.4em);
+  width: var(--size-of-icon,1.4em);
+  border-radius: 20px;
+  left: var(--slider-offset,0.3em);
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(40deg,#ff0080,#ff8c00 70%);
+  ;
+ transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #303136;
+}
+
+input:checked + .slider:before {
+  left: calc(100% - (var(--size-of-icon,1.4em) + var(--slider-offset,0.3em)));
+  background: #303136;
+  /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
+
+
+
+@keyframes grow {
+  0% { max-height: var(--lineHeight); }
+  100% { max-height: calc(var(--lineHeight) * var(--lines)); }
+}
+
+@keyframes carriageReturn {
+  0% { top: 0; }
+  100% { top: calc(var(--lineHeight) * var(--lines)); }
+}
+
+@keyframes type {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+
+@keyframes caret {
+  0% { color: var(--bgColor); }
+  100% { color: black; }
+}
+
+.typewriter {
+  --bgColor: white;
+  --lines: 500;
+  --lineHeight: 1.5rem;
+  --timePerLine: 4s;
+  --widthCh: 22;
+  --width: calc(var(--widthCh) * 1);
+  /* do not touch the time property!!! */
+  --time: calc(var(--lines) * var(--timePerLine));
+  animation: grow var(--time) steps(var(--lines));
+  animation-fill-mode: forwards;
+  background: var(--bgColor);  
+  line-height: var(--lineHeight);
+  max-height: var(--lineHeight);
+  overflow: hidden;
+  position: relative;
+  width: var(--width);
+  /* padding: 0px 20px 0px 20px; */
+  /* border-radius: 100%; */
+  /* word-break: break-all; */
+}
+
+.typewriter::before {
+  content: "";
+  animation: 
+    type var(--timePerLine) linear infinite, 
+    carriageReturn var(--time) steps(var(--lines)) var(--lines),
+    caret 0.5s steps(2) infinite;
+  background: var(--bgColor);
+  border-left: 2px solid;
+  bottom: 0;
+  height: 2rem;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+.typewriter.no-caret::before {
+  border-left-width: 0;
+}
+
+.typewriter.big-caret::before {
+  border-left-width: 1ch;
+}
+
+.typewriter.monospace {
+  font-family: monospace, monospace;
+}
+
+.typewriter.monospace::before {
+  animation: 
+    type var(--timePerLine) steps(var(--widthCh)) infinite, 
+    carriageReturn var(--time) steps(var(--lines)) var(--lines),
+    caret 0.5s steps(2) infinite;
+}
+
+/* DEMO */
+section {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  padding: 1rem;
+  position: absolute;
+  top: 1rem;
+  width: 100%;
+}
+
+section:nth-child(2) { top: 10rem; }
+section:nth-child(3) { top: 20rem; }
+
+.lorem {
+  --widthch: 100;
+  --timePerLine: 2s;
+}
